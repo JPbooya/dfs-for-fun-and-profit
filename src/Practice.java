@@ -132,6 +132,13 @@ public class Practice {
    * @return true if all reachable vertices hold odd values, false otherwise
    */
   public boolean allOdd(Vertex<Integer> vertex) {
+    if(vertex == null) return true;
+    Set<Vertex<Integer>> reachableSet = reachable(vertex);
+    for(Vertex<Integer> current : reachableSet) {
+      if(current.data % 2 == 0) {
+        return false;
+      }
+    }
     return true;
   }
 
@@ -150,6 +157,21 @@ public class Practice {
    * @throws NullPointerException if either start or end is null.
    */
   public boolean hasStrictlyIncreasingPath(Vertex<Integer> start, Vertex<Integer> end) {
+
+    if(start == null || end == null) throw new  NullPointerException();
+    if(start == end ) {
+      return true;
+    }
+
+    for(Vertex<Integer> neighbor : start.neighbors) {
+      if(neighbor.data > start.data) {
+       if( hasStrictlyIncreasingPath(neighbor, end)) {
+        return true;
+       }
+      }
+    }
+
     return false;
   }
 }
+
